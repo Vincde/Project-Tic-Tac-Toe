@@ -16,6 +16,8 @@ const gameBoard = {
     startGame : function(){
         let whoIsThePlayer = 'X';
 
+        
+
         const buttons = document.querySelectorAll('.game-board button');
 
         for(let i = 0; i < buttons.length; i++){

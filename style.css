@@ -9,13 +9,13 @@ body{
     grid-template-rows: 1fr 1fr 1fr;
 }
 
-.game-board > div{
-    border: 2px solid green;
-    
+.game-board button{
+    font-size: 48px;
 }
 
 .scores{
     border:2px solid red;
     width: 50%;
     padding-left: 150px;
+    font-size: 48px;
 }
