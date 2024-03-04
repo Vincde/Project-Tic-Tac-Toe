@@ -1,7 +1,10 @@
 const Player = {
 
-    createPlayer : function(name,symbol){
+    createPlayer : function(symbol){
+        let name;
+        name = prompt('Insert name of player');
         return {name,symbol};
+
     }
 
 }
@@ -10,13 +13,12 @@ const Player = {
 const gameBoard = {
 
     board : [' ',' ',' ',' ',' ',' ',' ',' ',' '],
-    player1 : Player.createPlayer('mimmo','X'),
-    player2 : Player.createPlayer('aldo','O'),
+
+    player1 : Player.createPlayer('X'),
+    player2 : Player.createPlayer('O'),
 
     startGame : function(){
         let whoIsThePlayer = 'X';
-
-        
 
         const buttons = document.querySelectorAll('.game-board button');
 
@@ -99,9 +101,8 @@ const gameBoard = {
                 return 'Game is won! by ' + playerWhoWon.name;
             }else if(this.verifyTie() === 0){
                 return 'Its a tie!';
-            }
-
-
+            }const player1 = Player.createPlayer('X');
+            const player2 = Player.createPlayer('O');
     },
 
     verifyTie: function(){
