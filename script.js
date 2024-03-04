@@ -28,11 +28,6 @@ const gameBoard = {
                 }
             },{once:true});
         }
-
-
-
-        
-
     },
 
     displayBoard: function(){
@@ -59,6 +54,7 @@ const gameBoard = {
         const scores = document.querySelector('.scores');
         if(result !== undefined){
             scores.textContent = result;
+            return;
         }
         
     },
@@ -99,12 +95,21 @@ const gameBoard = {
                 this.board[2] !== ' ' && this.board[4] !== ' ' && this.board[6] !== ' ')
             ){
                 return 'Game is won! by ' + playerWhoWon.name;
+            }else if(this.verifyTie() === 0){
+                return 'Its a tie!';
             }
 
 
+    },
+
+    verifyTie: function(){
+        for(let j = 0; j < this.board.length; j++ ){
+            if(this.board[j] === ' '){ 
+                return -1;
+            }
+        }
+        return 0;
     }
-
-
 }
 
 gameBoard.startGame();
