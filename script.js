@@ -1,5 +1,3 @@
-
-
 const Player = {
 
     createPlayer : function(name,symbol){
@@ -10,34 +8,55 @@ const Player = {
 
 
 const gameBoard = {
-    board : ['a','a','a','a','a','a','a','a','a'],
+
+    board : [' ',' ',' ',' ',' ',' ',' ',' ',' '],
     player1 : Player.createPlayer('mimmo','X'),
     player2 : Player.createPlayer('aldo','O'),
 
+    startGame : function(){
+        let whoIsThePlayer = 'X';
+
+        /* const buttons = document.querySelectorAll('.game-board button');
+
+        for(let i = 0; i < buttons.length; i++){
+            buttons[i].addEventListener('click', () => {
+                
+            });
+        } */
+
+
+
+        this.playBoard(whoIsThePlayer);
+
+    },
+
     displayBoard: function(){
-        //queryslector for the buttons i suppose
+        const buttons = document.querySelectorAll('.game-board button');
 
         for(let i = 0; i < this.board.length; i++){
             console.log(this.board[i]);
-            //SelectedButton.value = this.board[i]
+            buttons[i].textContent = this.board[i];
         }
     },
 
-    playBoard : function() {
-        //querySelector.
+    playBoard : function(whoIsThePlayer) {
 
-        let whoIsThePlayer = 'x';
 
-        let playerChoice = 2; //example of read positioning;
+        let playerChoice = 4; //example of read positioning;
 
-        if(board[playerChoice] === ' '){
-        board[playerChoice] = whoIsThePlayer;  //  element in the grid = (X or O) in the array
+        if(this.board[playerChoice] === ' '){
+        this.board[playerChoice] = whoIsThePlayer;  //  element in the grid = (X or O) in the array
         }else{
             alert('cannot execute on a button which is already been pressed');
+            return;
         }
 
-
-        console.log(this.verifyWinner(whoIsThePlayer));
+        this.displayBoard();
+        let result = this.verifyWinner(whoIsThePlayer);
+        
+        if(result !== undefined){
+            console.log(result);
+        }
         
     },
 
@@ -50,17 +69,39 @@ const gameBoard = {
             playerWhoWon = this.player2;
         }
 
-            if((board[0] === board[1] && board[1]=== board[2]) ||
-            (board[3] === board[4] && board[4] === board[5]) ||
-            (board[6] === board[7] && board[7] === board[8]) ||
-            (board[0] === board[3] && board[3] === board[6]) ||
-            (board[1] === board[4] && board[4] === board[7]) ||
-            (board[2] === board[5] && board[5] === board[8]) ||
-            (board[0] === board[4] && board[4] === board[8]) ||
-            (board[2] === board[4] && board[4] === board[6])){
+
+
+            if((this.board[0] === this.board[1] && this.board[1]=== this.board[2] &&
+                this.board[0] !== ' ' && this.board[1] !== ' ' && this.board[2] !== ' ') ||
+
+            (this.board[3] === this.board[4] && this.board[4] === this.board[5] &&
+                this.board[3] !== ' ' && this.board[4] !== ' ' && this.board[5] !== ' ') ||
+
+            (this.board[6] === this.board[7] && this.board[7] === this.board[8] &&
+                this.board[6] !== ' ' && this.board[7] !== ' ' && this.board[8] !== ' ') ||
+
+            (this.board[0] === this.board[3] && this.board[3] === this.board[6] &&
+                this.board[0] !== ' ' && this.board[3] !== ' ' && this.board[6] !== ' ') ||
+
+            (this.board[1] === this.board[4] && this.board[4] === this.board[7] &&
+                this.board[1] !== ' ' && this.board[4] !== ' ' && this.board[7] !== ' ') ||
+
+            (this.board[2] === this.board[5] && this.board[5] === this.board[8] &&
+                this.board[2] !== ' ' && this.board[5] !== ' ' && this.board[8] !== ' ') ||
+
+            (this.board[0] === this.board[4] && this.board[4] === this.board[8] &&
+                this.board[0] !== ' ' && this.board[4] !== ' ' && this.board[8] !== ' ') ||
+
+            (this.board[2] === this.board[4] && this.board[4] === this.board[6] &&
+                this.board[2] !== ' ' && this.board[4] !== ' ' && this.board[6] !== ' ')
+            ){
                 return 'Game is won! by ' + playerWhoWon.name;
             }
+
+
     }
 
 
 }
+
+gameBoard.startGame();
