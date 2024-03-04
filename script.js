@@ -11,8 +11,8 @@ const Player = {
 
 const gameBoard = {
     board : ['a','a','a','a','a','a','a','a','a'],
-    player1 : Player.createPlayer('mimmo','x'),
-    player2 : Player.createPlayer('aldo','y'),
+    player1 : Player.createPlayer('mimmo','X'),
+    player2 : Player.createPlayer('aldo','O'),
 
     displayBoard: function(){
         //queryslector for the buttons i suppose
@@ -28,18 +28,39 @@ const gameBoard = {
 
         let whoIsThePlayer = 'x';
 
-        //selector for buttons
+        let playerChoice = 2; //example of read positioning;
 
-        //when ison
-        //selectedButton.textcontent = whoisThePyaer
+        if(board[playerChoice] === ' '){
+        board[playerChoice] = whoIsThePlayer;  //  element in the grid = (X or O) in the array
+        }else{
+            alert('cannot execute on a button which is already been pressed');
+        }
 
-        //board[i].textContent = WhoIsThePlayer
-        
-        
-        
-        //whoIsThePlayer = 'O';
 
+        console.log(this.verifyWinner(whoIsThePlayer));
         
+    },
+
+
+    verifyWinner : function(whoIsThePlayer){
+        let playerWhoWon;
+        if(whoIsThePlayer === 'X'){
+            playerWhoWon = this.player1;
+        }else{
+            playerWhoWon = this.player2;
+        }
+
+            if((board[0] === board[1] && board[1]=== board[2]) ||
+            (board[3] === board[4] && board[4] === board[5]) ||
+            (board[6] === board[7] && board[7] === board[8]) ||
+            (board[0] === board[3] && board[3] === board[6]) ||
+            (board[1] === board[4] && board[4] === board[7]) ||
+            (board[2] === board[5] && board[5] === board[8]) ||
+            (board[0] === board[4] && board[4] === board[8]) ||
+            (board[2] === board[4] && board[4] === board[6])){
+                return 'Game is won! by ' + playerWhoWon.name;
+            }
     }
-}
 
+
+}
