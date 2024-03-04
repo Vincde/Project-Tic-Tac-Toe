@@ -16,17 +16,22 @@ const gameBoard = {
     startGame : function(){
         let whoIsThePlayer = 'X';
 
-        /* const buttons = document.querySelectorAll('.game-board button');
+        const buttons = document.querySelectorAll('.game-board button');
 
         for(let i = 0; i < buttons.length; i++){
             buttons[i].addEventListener('click', () => {
-                
-            });
-        } */
+                this.playBoard(whoIsThePlayer,i);
+                if(whoIsThePlayer === 'X'){
+                whoIsThePlayer = 'O';
+                }else{
+                    whoIsThePlayer = 'X';
+                }
+            },{once:true});
+        }
 
 
 
-        this.playBoard(whoIsThePlayer);
+        
 
     },
 
@@ -34,18 +39,14 @@ const gameBoard = {
         const buttons = document.querySelectorAll('.game-board button');
 
         for(let i = 0; i < this.board.length; i++){
-            console.log(this.board[i]);
             buttons[i].textContent = this.board[i];
         }
     },
 
-    playBoard : function(whoIsThePlayer) {
+    playBoard : function(whoIsThePlayer,i) {
 
-
-        let playerChoice = 4; //example of read positioning;
-
-        if(this.board[playerChoice] === ' '){
-        this.board[playerChoice] = whoIsThePlayer;  //  element in the grid = (X or O) in the array
+        if(this.board[i] === ' '){
+        this.board[i] = whoIsThePlayer;  //  element in the grid = (X or O) in the array
         }else{
             alert('cannot execute on a button which is already been pressed');
             return;
@@ -54,8 +55,10 @@ const gameBoard = {
         this.displayBoard();
         let result = this.verifyWinner(whoIsThePlayer);
         
+
+        const scores = document.querySelector('.scores');
         if(result !== undefined){
-            console.log(result);
+            scores.textContent = result;
         }
         
     },
