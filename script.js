@@ -48,12 +48,18 @@ const gameBoard = function(){
 
     const printResult = function(player){
         console.log('the winner of the round is ' + player.name);
-    }
+        reset();
+    };
 
-
+    const reset = function(){
+        for(let i = 0; i < buttons.length; i++){
+            board[i] = ' ';
+            buttons[i].textContent = ' ';
+        }
+    };
 
     
-    return {displayBoard,modifyBoard,verifyWhoWins};
+    return {displayBoard,modifyBoard,verifyWhoWins,reset};
 } // PLEASE NOTE : NOT IIFE SO I HAVE TO CREATE A VARIABLE TO USE THOSE INSIDE FUNCTIONS  
 
 
@@ -73,15 +79,23 @@ const Player = function(){
 
         for(let i = 0; i < buttons.length; i++){
             buttons[i].addEventListener('click', () =>{
+
                 boardFunctions.modifyBoard(changePlayer.symbol,i);
                 boardFunctions.displayBoard();
                 boardFunctions.verifyWhoWins(changePlayer);
+
 
                 if(changePlayer.symbol === player1.symbol) changePlayer = player2;
                 else changePlayer = player1;
             });
         
         }
+
+        const resetButton = document.querySelector('.scores button');
+    
+        resetButton.addEventListener('click',() => {
+            boardFunctions.reset();
+        });
 
     };
     
