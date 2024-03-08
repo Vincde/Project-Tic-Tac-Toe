@@ -15,7 +15,7 @@ const gameBoard = function(){
         board[position] = symbol;
     };
 
-    const verifyWhoWins = (player) =>{
+    const verifyWhoWins = (player,secondaryPlayer) =>{
 
         if((board[0] === board[1] && board[1]=== board[2] && board[1] === player.symbol &&
             board[0] !== ' ' && board[1] !== ' ' && board[2] !== ' ') ||
@@ -41,17 +41,20 @@ const gameBoard = function(){
         (board[2] === board[4] && board[4] === board[6] && board[4] === player.symbol &&
             board[2] !== ' ' && board[4] !== ' ' && board[6] !== ' ')
         ){
-           printResult(player);
+           player.score++;
+           printResult(player,secondaryPlayer); 
+           
         }
 
 
     };
 
-    const printResult = function(player){
+    const printResult = function(player,secondaryPlayer){
         results.innerHTML = 'the winner' + '<br>' + 'of the round is ' + '<br>' + player.name;
-        
+        results.innerHTML += '<br>' + player.name + ' ' + player.score + ' - ' + secondaryPlayer.score + ' ' + secondaryPlayer.name;
         reset();
     };
+
 
     const reset = function(){
         for(let i = 0; i < buttons.length; i++){
@@ -69,16 +72,16 @@ const gameBoard = function(){
 const Player = function(){
 
    
-    const createPlayer = (name,symbol) =>{
-        return {name,symbol};
+    const createPlayer = (name,symbol,score) =>{
+        return {name,symbol,score};
     };
 
 
     const DOMElements = function(player1,player2){ 
-        
         let contentOfButton;
         const boardFunctions = gameBoard();
         let changePlayer = player1;
+        let secondaryPlayer = player2;
         const buttons = document.querySelectorAll('.game-board button');
 
         for(let j = 0; j < buttons.length; j++){
@@ -93,12 +96,16 @@ const Player = function(){
 
                 boardFunctions.modifyBoard(changePlayer.symbol,i);
                 boardFunctions.displayBoard();
-                boardFunctions.verifyWhoWins(changePlayer);
+                boardFunctions.verifyWhoWins(changePlayer,secondaryPlayer);
 
-
-                if(changePlayer.symbol === player1.symbol) changePlayer = player2;
-                else changePlayer = player1;
-
+                if(changePlayer.symbol === player1.symbol){
+                    changePlayer = player2;
+                    secondaryPlayer = player1;
+                    }
+                else{ 
+                    changePlayer = player1;
+                    secondaryPlayer = player2;
+                }
             });
         
         }
@@ -127,9 +134,9 @@ const game = function(){
     let name;
 
     name = prompt('insert name of first player: ');
-    const player1 = players.createPlayer(name,'X');
+    const player1 = players.createPlayer(name,'X',0);
     name = prompt('insert name of the second player');
-    const player2 = players.createPlayer(name,'O');
+    const player2 = players.createPlayer(name,'O',0);
 
     players.DOMElements(player1,player2);
 
