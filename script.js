@@ -52,22 +52,27 @@ const gameBoard = function(){
     const printResult = function(player,secondaryPlayer){
         results.innerHTML = 'the winner' + '<br>' + 'of the round is ' + '<br>' + player.name;
         results.innerHTML += '<br>' + player.name + ' ' + player.score + ' - ' + secondaryPlayer.score + ' ' + secondaryPlayer.name;
-        reset(player,secondaryPlayer);
+        reset();
     };
 
 
-    const reset = function(player,secondaryPlayer){
+    const reset = function(){
         for(let i = 0; i < buttons.length; i++){
             board[i] = ' ';
             buttons[i].textContent = ' ';
             setTimeout(() =>(results.innerHTML = ' '),3000);
-            player.scores = 0;
-            secondaryPlayer.scores = 0;
         }
     };
 
+    const finalPhrase = function(changePlayer,secondaryPlayer){
+        results.innerHTML = 'Game has finished!' + '<br>' +  'the winner is' + '<br>' + changePlayer.name; 
+        changePlayer.score = 0;
+        secondaryPlayer.score = 0;
+        reset();
+    }
+
     
-    return {displayBoard,modifyBoard,verifyWhoWins,reset};
+    return {displayBoard,modifyBoard,verifyWhoWins,reset,finalPhrase};
 } // PLEASE NOTE : NOT IIFE SO I HAVE TO CREATE A VARIABLE TO USE THOSE INSIDE FUNCTIONS  
 
 
@@ -80,8 +85,9 @@ const Player = function(){
 
 
     const DOMElements = function(player1,player2){ 
-        
+    
         const boardFunctions = gameBoard();
+        let counterPlay = 0;
         let changePlayer = player1;
         let secondaryPlayer = player2;
         const buttons = document.querySelectorAll('.game-board button');
@@ -98,7 +104,18 @@ const Player = function(){
 
                 boardFunctions.modifyBoard(changePlayer.symbol,i);
                 boardFunctions.displayBoard();
+
+                counterPlay = changePlayer.score;
+
                 boardFunctions.verifyWhoWins(changePlayer,secondaryPlayer);
+
+                if(counterPlay < changePlayer.score){
+                    counterPlay++;
+                }
+                if(counterPlay === 3){
+                    boardFunctions.finalPhrase(changePlayer,secondaryPlayer);
+                }
+                
 
                 if(changePlayer.symbol === player1.symbol){
                     changePlayer = player2;
