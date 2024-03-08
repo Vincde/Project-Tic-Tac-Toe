@@ -14,8 +14,21 @@ body{
 }
 
 .scores{
-    border:2px solid red;
     width: 50%;
-    padding-left: 150px;
-    font-size: 48px;
+    /* padding-left: 150px; */
+    font-size: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.results{
+    width: 300px;
+    height: 300px;
+}
+
+.scores button{
+    margin-bottom: 20px;
 }

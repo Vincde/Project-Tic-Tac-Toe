@@ -1,6 +1,7 @@
 const gameBoard = function(){
 
     const buttons = document.querySelectorAll('.game-board button');
+    const results = document.querySelector('.results');
 
     const board = [' ',' ',' ',' ',' ',' ',' ',' ',' '];
     
@@ -47,7 +48,8 @@ const gameBoard = function(){
     };
 
     const printResult = function(player){
-        console.log('the winner of the round is ' + player.name);
+        results.innerHTML = 'the winner' + '<br>' + 'of the round is ' + '<br>' + player.name;
+        
         reset();
     };
 
@@ -55,6 +57,7 @@ const gameBoard = function(){
         for(let i = 0; i < buttons.length; i++){
             board[i] = ' ';
             buttons[i].textContent = ' ';
+            setTimeout(() =>(results.innerHTML = ' '),3000);
         }
     };
 
@@ -72,6 +75,7 @@ const Player = function(){
 
 
     const DOMElements = function(player1,player2){ 
+        
         let contentOfButton;
         const boardFunctions = gameBoard();
         let changePlayer = player1;
@@ -84,6 +88,7 @@ const Player = function(){
         for(let i = 0; i < buttons.length; i++){
             
             buttons[i].addEventListener('click', (event) =>{
+
                 if(event.currentTarget.textContent !== ' ') return;
 
                 boardFunctions.modifyBoard(changePlayer.symbol,i);
@@ -93,6 +98,7 @@ const Player = function(){
 
                 if(changePlayer.symbol === player1.symbol) changePlayer = player2;
                 else changePlayer = player1;
+
             });
         
         }
