@@ -59,33 +59,16 @@ const gameBoard = function(){
 
 const Player = function(){
 
+   
     const createPlayer = (name,symbol) =>{
         return {name,symbol};
     };
-    
-    
-
-    return {createPlayer};
-} // PLEASE NOTE : NOT IIFE SO I HAVE TO CREATE A VARIABLE TO USE THOSE INSIDE FUNCTIONS
 
 
+    const DOMElements = function(player1,player2){ 
 
-const game = function(){
-
-    const players = Player();
-    let name;
-
-    name = prompt('insert name of first player: ');
-    const player1 = players.createPlayer(name,'X');
-    name = prompt('insert name of the second player');
-    const player2 = players.createPlayer(name,'O');
-
-    let changePlayer = player1;
-
-    const boardFunctions = gameBoard();
-
-
-    (function(){ 
+        const boardFunctions = gameBoard();
+        let changePlayer = player1;
         const buttons = document.querySelectorAll('.game-board button');
 
         for(let i = 0; i < buttons.length; i++){
@@ -100,8 +83,29 @@ const game = function(){
         
         }
 
-    })();
+    };
     
+
+
+
+
+
+    return {createPlayer,DOMElements};
+} // PLEASE NOTE : NOT IIFE SO I HAVE TO CREATE A VARIABLE TO USE THOSE INSIDE FUNCTIONS
+
+
+
+const game = function(){
+
+    const players = Player();
+    let name;
+
+    name = prompt('insert name of first player: ');
+    const player1 = players.createPlayer(name,'X');
+    name = prompt('insert name of the second player');
+    const player2 = players.createPlayer(name,'O');
+
+    players.DOMElements(player1,player2);
 
     
 }
