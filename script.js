@@ -52,15 +52,17 @@ const gameBoard = function(){
     const printResult = function(player,secondaryPlayer){
         results.innerHTML = 'the winner' + '<br>' + 'of the round is ' + '<br>' + player.name;
         results.innerHTML += '<br>' + player.name + ' ' + player.score + ' - ' + secondaryPlayer.score + ' ' + secondaryPlayer.name;
-        reset();
+        reset(player,secondaryPlayer);
     };
 
 
-    const reset = function(){
+    const reset = function(player,secondaryPlayer){
         for(let i = 0; i < buttons.length; i++){
             board[i] = ' ';
             buttons[i].textContent = ' ';
             setTimeout(() =>(results.innerHTML = ' '),3000);
+            player.scores = 0;
+            secondaryPlayer.scores = 0;
         }
     };
 
@@ -78,7 +80,7 @@ const Player = function(){
 
 
     const DOMElements = function(player1,player2){ 
-        let contentOfButton;
+        
         const boardFunctions = gameBoard();
         let changePlayer = player1;
         let secondaryPlayer = player2;
