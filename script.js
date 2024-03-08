@@ -1,11 +1,13 @@
 const gameBoard = function(){
 
-    const board = ['a','','','b','','','','',''];
+    const buttons = document.querySelectorAll('.game-board button');
+
+    const board = [' ',' ',' ',' ',' ',' ',' ',' ',' '];
     
     const displayBoard = function(){
-        for(elem of board){
-            console.log(elem);
-        }
+        for(let j = 0; j < buttons.length; j++){
+            buttons[j].textContent = board[j];
+        };
     };
 
     const modifyBoard = (symbol,position) =>{
@@ -14,28 +16,28 @@ const gameBoard = function(){
 
     const verifyWhoWins = (player) =>{
 
-        if((board[0] === board[1] && board[1]=== board[2] && board[1] === playerSymbol1 &&
+        if((board[0] === board[1] && board[1]=== board[2] && board[1] === player.symbol &&
             board[0] !== ' ' && board[1] !== ' ' && board[2] !== ' ') ||
 
-        (board[3] === board[4] && board[4] === board[5] && board[4] === playerSymbol1 &&
+        (board[3] === board[4] && board[4] === board[5] && board[4] === player.symbol &&
             board[3] !== ' ' && board[4] !== ' ' && board[5] !== ' ') ||
 
-        (board[6] === board[7] && board[7] === board[8] && board[7] === playerSymbol1 &&
+        (board[6] === board[7] && board[7] === board[8] && board[7] === player.symbol &&
             board[6] !== ' ' && board[7] !== ' ' && board[8] !== ' ') ||
 
-        (board[0] === board[3] && board[3] === board[6] && board[3] === playerSymbol1 &&
+        (board[0] === board[3] && board[3] === board[6] && board[3] === player.symbol &&
             board[0] !== ' ' && board[3] !== ' ' && board[6] !== ' ') ||
 
-        (board[1] === board[4] && board[4] === board[7] && board[4] === playerSymbol1 &&
+        (board[1] === board[4] && board[4] === board[7] && board[4] === player.symbol &&
             board[1] !== ' ' && board[4] !== ' ' && board[7] !== ' ') ||
 
-        (board[2] === board[5] && board[5] === board[8] && board[5] === playerSymbol1 &&
+        (board[2] === board[5] && board[5] === board[8] && board[5] === player.symbol &&
             board[2] !== ' ' && board[5] !== ' ' && board[8] !== ' ') ||
 
-        (board[0] === board[4] && board[4] === board[8] && board[4] === playerSymbol1 &&
+        (board[0] === board[4] && board[4] === board[8] && board[4] === player.symbol &&
             board[0] !== ' ' && board[4] !== ' ' && board[8] !== ' ') ||
 
-        (board[2] === board[4] && board[4] === board[6] && board[4] === playerSymbol1 &&
+        (board[2] === board[4] && board[4] === board[6] && board[4] === player.symbol &&
             board[2] !== ' ' && board[4] !== ' ' && board[6] !== ' ')
         ){
            printResult(player);
@@ -45,7 +47,7 @@ const gameBoard = function(){
     };
 
     const printResult = function(player){
-        console.log('the winner of the round is' + player.name);
+        console.log('the winner of the round is ' + player.name);
     }
 
 
@@ -72,29 +74,39 @@ const game = function(){
 
     const players = Player();
     let name;
-    let changePlayer = player1;
 
     name = prompt('insert name of first player: ');
     const player1 = players.createPlayer(name,'X');
     name = prompt('insert name of the second player');
     const player2 = players.createPlayer(name,'O');
 
+    let changePlayer = player1;
+
     const boardFunctions = gameBoard();
 
 
-    (function(){ //DOM buttons eventListener
-        /* boardFunctions.modifyBoard(changePlayer.symbol,i); */
-        /* boardFunctions.displayBoard(); */
-        /* boardFunctions.verifyWhoWins(changePlayer); */
+    (function(){ 
+        const buttons = document.querySelectorAll('.game-board button');
 
+        for(let i = 0; i < buttons.length; i++){
+            buttons[i].addEventListener('click', () =>{
+                boardFunctions.modifyBoard(changePlayer.symbol,i);
+                boardFunctions.displayBoard();
+                boardFunctions.verifyWhoWins(changePlayer);
 
-        if(changePlayer.symbol === player1.symbol) changePlayer = player2;
-        else changePlayer = player1;
+                if(changePlayer.symbol === player1.symbol) changePlayer = player2;
+                else changePlayer = player1;
+            });
+        
+        }
+
     })();
     
 
     
 }
+
+game();
 
 
 
