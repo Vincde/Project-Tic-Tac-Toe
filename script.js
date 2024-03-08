@@ -72,13 +72,19 @@ const Player = function(){
 
 
     const DOMElements = function(player1,player2){ 
-
+        let contentOfButton;
         const boardFunctions = gameBoard();
         let changePlayer = player1;
         const buttons = document.querySelectorAll('.game-board button');
 
+        for(let j = 0; j < buttons.length; j++){
+            buttons[j].textContent = ' ';
+        }
+
         for(let i = 0; i < buttons.length; i++){
-            buttons[i].addEventListener('click', () =>{
+            
+            buttons[i].addEventListener('click', (event) =>{
+                if(event.currentTarget.textContent !== ' ') return;
 
                 boardFunctions.modifyBoard(changePlayer.symbol,i);
                 boardFunctions.displayBoard();
